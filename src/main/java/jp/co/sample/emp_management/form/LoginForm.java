@@ -1,5 +1,8 @@
 package jp.co.sample.emp_management.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 /**
  * ログイン時に使用するフォーム.
  * 
@@ -7,12 +10,14 @@ package jp.co.sample.emp_management.form;
  * 
  */
 public class LoginForm {
-	
+
 	/** メールアドレス */
+	@Pattern(regexp = "^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\\.)+[a-zA-Z]{2,}$", message = "メールアドレスを入力してください")
 	private String mailAddress;
 	/** パスワード */
+	@NotBlank(message = "パスワードを入力してください")
 	private String password;
-	
+
 	/**
 	 * @return the mailAddress
 	 */

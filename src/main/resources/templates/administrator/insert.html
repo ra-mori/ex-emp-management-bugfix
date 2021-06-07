@@ -52,7 +52,7 @@
             <form
               method="post"
               action="login.html"
-              th:action="@{/}"
+              th:action="@{/insert}"
               th:object="${insertAdministratorForm}"
             >
               <fieldset>
@@ -64,11 +64,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="name"> 氏名: </label>
-                      <label
-                        th:if="${#fields.hasErrors('name')}"
-                        th:errors="*{name}"
-                        class="error-messages"
-                      >
+                      <label th:errors="*{name}" class="error-messages">
                         氏名を入力してください
                       </label>
                       <input
@@ -78,7 +74,6 @@
                         class="form-control"
                         placeholder="山田太郎"
                         th:field="*{name}"
-                        th:errorclass="error-input"
                         value="山田太郎"
                       />
                     </div>
@@ -89,11 +84,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="mailAddress"> メールアドレス: </label>
-                      <label
-                        th:if="${#fields.hasErrors('mailAddress')}"
-                        th:errors="*{mailAddress}"
-                        class="error-messages"
-                      >
+                      <label th:errors="*{mailAddress}" class="error-messages">
                         メールアドレスを入力してください
                       </label>
                       <input
@@ -103,7 +94,6 @@
                         class="form-control"
                         placeholder="yamada@mail.com"
                         th:field="*{mailAddress}"
-                        th:errorclass="error-input"
                         value="yamada@mail.com"
                       />
                     </div>
@@ -114,11 +104,11 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="passwaord"> パスワード: </label>
-                      <label
-                        th:if="${#fields.hasErrors('password')}"
-                        th:errors="*{password}"
-                        class="error-messages"
-                      >
+                      <p>
+                        (パスワードは8文字以上16文字以下、半角英数字で大文字と小文字を1回以上使用してください)
+                      </p>
+                      <p>「.」「*」「?」は使用可能です</p>
+                      <label th:errors="*{password}" class="error-messages">
                         パスワードを入力してください
                       </label>
                       <input
@@ -128,7 +118,6 @@
                         class="form-control"
                         placeholder="password"
                         th:field="*{password}"
-                        th:errorclass="error-input"
                         value="xxxxxxxx"
                       />
                     </div>
