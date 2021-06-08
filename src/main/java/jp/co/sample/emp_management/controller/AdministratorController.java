@@ -23,7 +23,7 @@ import jp.co.sample.emp_management.service.AdministratorService;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/administrator")
 public class AdministratorController {
 
 	@Autowired
@@ -93,6 +93,7 @@ public class AdministratorController {
 	 * @return ログイン画面
 	 */
 	@RequestMapping("/")
+   featuer/validation
 	public String toLogin(Model model) {
 		return "/administrator/login";
 	}

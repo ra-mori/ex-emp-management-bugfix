@@ -109,6 +109,11 @@
                       </p>
                       <p>「.」「*」「?」は使用可能です</p>
                       <label th:errors="*{password}" class="error-messages">
+                      <label
+                        th:if="${#fields.hasErrors('password')}"
+                        th:errors="*{password}"
+                        class="error-messages"
+                      >
                         パスワードを入力してください
                       </label>
                       <input
