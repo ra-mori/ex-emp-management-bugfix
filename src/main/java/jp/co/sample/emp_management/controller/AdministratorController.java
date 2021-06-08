@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -60,7 +61,7 @@ public class AdministratorController {
 	 * @return 管理者登録画面
 	 */
 	@RequestMapping("/toInsert")
-	public String toInsert() {
+	public String toInsert(Model model) {
 		return "/administrator/insert";
 	}
 
@@ -71,12 +72,16 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(InsertAdministratorForm form) {
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return toInsert(model);
+		}
+
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
-		return "employee/list";
+		return "redirect:/";
 	}
 
 	/////////////////////////////////////////////////////
@@ -88,7 +93,8 @@ public class AdministratorController {
 	 * @return ログイン画面
 	 */
 	@RequestMapping("/")
-	public String toLogin() {
+   featuer/validation
+	public String toLogin(Model model) {
 		return "/administrator/login";
 	}
 
@@ -100,13 +106,16 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@RequestMapping("/login")
-	public String login(LoginForm form, BindingResult result, Model model) {
+	public String login(@Validated LoginForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return toLogin(model);
+		}
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
-			return toLogin();
+			return toLogin(model);
 		}
-		return "forward:/employee/showList";
+		return "redirect:/employee/showList";
 	}
 
 	/////////////////////////////////////////////////////
