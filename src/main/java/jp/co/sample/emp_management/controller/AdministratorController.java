@@ -93,7 +93,6 @@ public class AdministratorController {
 	 * @return ログイン画面
 	 */
 	@RequestMapping("/")
-   featuer/validation
 	public String toLogin(Model model) {
 		return "/administrator/login";
 	}
