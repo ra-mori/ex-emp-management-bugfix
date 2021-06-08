@@ -84,6 +84,12 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="mailAddress"> メールアドレス: </label>
+                      <label
+                        for="mailAddress"
+                        th:text="${duplicateEmail}"
+                        class="error-messages"
+                      >
+                      </label>
                       <label th:errors="*{mailAddress}" class="error-messages">
                         メールアドレスを入力してください
                       </label>
