@@ -76,12 +76,15 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert(model);
 		}
-
-		Administrator administrator = new Administrator();
-		// フォームからドメインにプロパティ値をコピー
-		BeanUtils.copyProperties(form, administrator);
-		administratorService.insert(administrator);
-		return "redirect:/";
+		if (form.getPassword().equals(form.getConfimationPassword())) {
+			Administrator administrator = new Administrator();
+			// フォームからドメインにプロパティ値をコピー
+			BeanUtils.copyProperties(form, administrator);
+			administratorService.insert(administrator);
+			return "redirect:/";
+		}
+		model.addAttribute("different", "パスワードと確認用パスワードが一致しません");
+		return toInsert(model);
 	}
 
 	/////////////////////////////////////////////////////

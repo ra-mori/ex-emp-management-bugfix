@@ -21,6 +21,16 @@ public class InsertAdministratorForm {
 	/** パスワード */
 	@Pattern(regexp = "^(?=.*?[a-zA-Z])(?=.*?\\d)[a-zA-Z\\d]{8,16}$", message = "８文字以上16文字以内で入力してください（数字、英小文字、英大文字を1回以上使用してください）")
 	private String password;
+	/** 確認用パスワード */
+	private String confimationPassword;
+
+	public String getConfimationPassword() {
+		return confimationPassword;
+	}
+
+	public void setConfimationPassword(String confimationPassword) {
+		this.confimationPassword = confimationPassword;
+	}
 
 	/**
 	 * @return the name
@@ -67,7 +77,7 @@ public class InsertAdministratorForm {
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", confimationPassword=" + confimationPassword + "]";
 	}
 
 }
