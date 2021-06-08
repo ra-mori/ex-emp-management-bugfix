@@ -23,7 +23,7 @@ import jp.co.sample.emp_management.service.AdministratorService;
  *
  */
 @Controller
-@RequestMapping("/administrator")
+@RequestMapping("/")
 public class AdministratorController {
 
 	@Autowired
