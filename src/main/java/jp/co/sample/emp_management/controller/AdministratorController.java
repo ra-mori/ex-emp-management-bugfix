@@ -77,30 +77,34 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert(model);
 		}
-// >>>>> feature/confirmationpass // by iga どちらが正しいか判断できなかったため、両方残した状態でマージします
-		if (form.getPassword().equals(form.getConfimationPassword())) {
-			Administrator administrator = new Administrator();
-			// フォームからドメインにプロパティ値をコピー
-			BeanUtils.copyProperties(form, administrator);
-			administratorService.insert(administrator);
-			return "redirect:/";
-		}
-		FieldError error = new FieldError("different", "password", "パスワードと確認用パスワードが一致しません");
-// ========
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		String inputEmail = administrator.getMailAddress();
+		boolean checkSamePassword = form.getPassword().equals(form.getConfimationPassword());
+
 		Administrator searchedsql = administratorService.findByMailAddress(inputEmail);
 
-		if (searchedsql == null) {
+		if (checkSamePassword && searchedsql == null) {
 			administratorService.insert(administrator);
 			return "redirect:/";
 		}
-		FieldError error = new FieldError("form", "mailAddress", inputEmail + "はすでに登録されています。");
-// >>>>>>> develop
-		result.addError(error);
-		return toInsert(model);
+
+		if (!checkSamePassword && searchedsql != null) {
+			FieldError error = new FieldError("different", "password", "パスワードと確認用パスワードが一致しません");
+			FieldError error2 = new FieldError("form", "mailAddress", inputEmail + "はすでに登録されています。");
+			result.addError(error);
+			result.addError(error2);
+			return toInsert(model);
+		} else if (!checkSamePassword) {
+			FieldError error = new FieldError("different", "password", "パスワードと確認用パスワードが一致しません");
+			result.addError(error);
+			return toInsert(model);
+		} else {
+			FieldError error2 = new FieldError("form", "mailAddress", inputEmail + "はすでに登録されています。");
+			result.addError(error2);
+			return toInsert(model);
+		}
 	}
 
 	/////////////////////////////////////////////////////
