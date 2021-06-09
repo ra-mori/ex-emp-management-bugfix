@@ -77,6 +77,7 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert(model);
 		}
+// >>>>> feature/confirmationpass // by iga どちらが正しいか判断できなかったため、両方残した状態でマージします
 		if (form.getPassword().equals(form.getConfimationPassword())) {
 			Administrator administrator = new Administrator();
 			// フォームからドメインにプロパティ値をコピー
@@ -85,6 +86,19 @@ public class AdministratorController {
 			return "redirect:/";
 		}
 		FieldError error = new FieldError("different", "password", "パスワードと確認用パスワードが一致しません");
+// ========
+		Administrator administrator = new Administrator();
+		// フォームからドメインにプロパティ値をコピー
+		BeanUtils.copyProperties(form, administrator);
+		String inputEmail = administrator.getMailAddress();
+		Administrator searchedsql = administratorService.findByMailAddress(inputEmail);
+
+		if (searchedsql == null) {
+			administratorService.insert(administrator);
+			return "redirect:/";
+		}
+		FieldError error = new FieldError("form", "mailAddress", inputEmail + "はすでに登録されています。");
+// >>>>>>> develop
 		result.addError(error);
 		return toInsert(model);
 	}
