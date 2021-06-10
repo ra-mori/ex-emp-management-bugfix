@@ -105,6 +105,18 @@
           <!-- ここから上を編集する必要はありません -->
 
           <!-- ここにモックのtable要素を貼り付けます -->
+          <section style="margin: 15px 0">
+            <form
+              th:action="@{/employee/showList}"
+              style="text-align: center"
+              method="post"
+            >
+              <div th:text="${searchresult}" style="color: red"></div>
+              <label for="employee-search"> 従業員検索: </label>
+              <input type="text" name="name" id="employee-search" />
+              <button>検索</button>
+            </form>
+          </section>
 
           <table class="table table-striped">
             <thead>
