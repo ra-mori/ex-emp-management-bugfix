@@ -47,9 +47,15 @@ public class EmployeeController {
 	 * @return 従業員一覧画面
 	 */
 	@RequestMapping("/showList")
-	public String showList(Model model) {
-		List<Employee> employeeList = employeeService.showList();
-		model.addAttribute("employeeList", employeeList);
+	public String showList(String name, Model model) {
+
+		List<Employee> employees = employeeService.findByNearName(name);
+
+		if (employees.isEmpty()) {
+			model.addAttribute("searchError", "１件もありませんでした");
+			employees = employeeService.showList();
+		}
+		model.addAttribute("employeeList", employees);
 		return "employee/list";
 	}
 
@@ -91,18 +97,4 @@ public class EmployeeController {
 		return "redirect:/employee/showList";
 	}
 
-	@RequestMapping("/fuzzySearch")
-	public String fuzzySearch(String name, Model model) {
-		if (name.equals("")) {
-			return showList(model);
-		}
-		List<Employee> employeeList = employeeService.findByNearName(name);
-		if (employeeList.size() != 0) {
-			model.addAttribute("employeeList", employeeList);
-			return "employee/list";
-		}
-
-		model.addAttribute("searchresult", "１件もありませんでした");
-		return showList(model);
-	}
 }
