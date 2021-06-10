@@ -3,8 +3,6 @@ package jp.co.sample.emp_management.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,11 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
 
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object obj,
 			Exception e) {
-		logger.error("システムエラーが発生しました！", e);
+		System.out.println("エラーが発生しました");
 		return null;
 	}
 }
